@@ -1,21 +1,11 @@
-using UnityEngine;
-
 public class Transaction {
-    [field: SerializeField] public string Description { get; private set; }
-    [field: SerializeField] public float Amount { get; private set; }
-    [field: SerializeField] public Category Category { get; private set; }
+    public TransactionData TransactionData { get; private set;}
 
-    public Transaction(string description, float amount, Category category) {
-        Description = description;
-        Amount = amount;
-        Category = category;
-    }
-
-    public void SetCategory(Category category) {
-        Category = category;
+    public Transaction(TransactionData transactionData) {
+        TransactionData = transactionData;
     }
 
     public override string ToString() {
-        return string.Format($"Описание: {Description}, Сумма: {Amount}, Категория: {Category.Name}");
+        return string.Format($"Описание: {TransactionData.Description}, Сумма: {TransactionData.Amount}, Категория: {TransactionData.Category.Name}");
     }
 }

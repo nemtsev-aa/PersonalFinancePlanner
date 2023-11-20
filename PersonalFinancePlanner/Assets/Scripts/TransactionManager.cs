@@ -1,38 +1,44 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class TransactionManager : MonoBehaviour {
-    [SerializeField] private string _categoryName;
-    [SerializeField] private string _transactionName;
-    [SerializeField] private float _amount;
+public class TransactionManager {
+    private TransactionFactory _transactionFactory;
+    private IEnumerable<TransactionData> _transactionDatas;
 
-    [field: SerializeField] public CategoryConfigs CategoryConfigs { get; private set; }
-    [field: SerializeField] public List<Transaction> Transactions { get; private set; }
+    public TransactionManager(CategoryConfigs configs, IEnumerable<TransactionData> transactionDatas) {
+        _transactionDatas = transactionDatas;
 
-    private void Start() {
         Transactions = new List<Transaction>();
+        _transactionFactory = new TransactionFactory(configs);
+
+        CreateTransactions();
     }
 
-    [ContextMenu("CreateTransitions")]
-    public void CreateTransitions() {
-        CreateTransaction(_categoryName, _transactionName, _amount);
-        DisplayTransactions();
-    }
+    public List<Transaction> Transactions { get; private set; }
 
-    private void CreateTransaction(string categoryName, string transactionName, float amount) {
-        Category category;
-        category = new Category(categoryName, CategoryConfigs.GetSpriteByCategoryName(categoryName));
-        
-        Transactions.Add(new Transaction(transactionName, amount, category));
-    }
-
-    private void DisplayTransactions() {
+    public void DisplayTransactions() {
         foreach (Transaction transaction in Transactions) {
             Debug.Log(transaction.ToString());
         }
     }
 
+    private void CreateTransactions() {
+        if (_transactionDatas.Count() == 0)
+            throw new ArgumentNullException($"TransactionDataList is empty");
+
+        foreach (var iData in _transactionDatas) {
+            CreateTransaction(iData);
+        }
+    }
+
+    private void CreateTransaction(TransactionData transactionData) {
+        Transaction newTransaction = _transactionFactory.Get(transactionData);
+        Transactions.Add(newTransaction);
+    }
+
+    
     //private void CategorizeTransactions() {
     //    foreach (Transaction transaction in Transactions) {
     //        if (transaction.Amount < 0) {
