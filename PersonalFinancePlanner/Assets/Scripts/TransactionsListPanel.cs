@@ -34,6 +34,7 @@ public class TransactionsListPanel : MonoBehaviour {
         foreach (RectTransform iTransform in _transactionViewParent) {
             Destroy(iTransform.gameObject);
         }
+
         _transactionViews.Clear();
     }
 }
