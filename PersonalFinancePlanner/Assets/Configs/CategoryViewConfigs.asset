@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307e04bfa6c11494a96646a7b42693d3, type: 3}
+  m_Name: CategoryViewConfigs
+  m_EditorClassIdentifier: 
+  _incomeCategory: {fileID: 11400000, guid: 5cd8d28a35624fc458c3b491ddbfecc3, type: 2}
+  _expenditureCategory: {fileID: 11400000, guid: 547620fc931a98e49a3aeaffda1e0d75,
+    type: 2}

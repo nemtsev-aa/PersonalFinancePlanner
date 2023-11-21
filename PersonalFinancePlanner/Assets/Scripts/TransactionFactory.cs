@@ -1,7 +1,7 @@
 public class TransactionFactory {
-    private CategoryConfigs _categoryConfigs;
+    private IncomeCategoryViewConfigs _categoryConfigs;
 
-    public TransactionFactory(CategoryConfigs categoryConfigs) {
+    public TransactionFactory(IncomeCategoryViewConfigs categoryConfigs) {
         _categoryConfigs = categoryConfigs;
     }
 

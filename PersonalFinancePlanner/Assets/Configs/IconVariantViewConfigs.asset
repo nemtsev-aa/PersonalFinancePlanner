@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22416bc8c5988a14d9593fde0cd792ff, type: 3}
+  m_Name: IconVariantViewConfigs
+  m_EditorClassIdentifier: 
+  <Configs>k__BackingField:
+  - <Icon>k__BackingField: {fileID: 21300000, guid: 961af17161592b8408c4c081091440fe,
+      type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: 690e9c53d1b231746a789a4c7032cefb,
+      type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: fc9f414497fe6c2499f11190bf48b0b9,
+      type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: 432a15fd43f3f254f9c7f0b40e5cb728,
+      type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: d35a68c2de6c3a641b7c447a22b69839,
+      type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: d779dfcdead8bf94d9a1e54842841f51,
+      type: 3}
+  - <Icon>k__BackingField: {fileID: 21300000, guid: 64f3fce3865a32644b8eef82cff1edf4,
+      type: 3}

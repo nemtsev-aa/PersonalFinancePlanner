@@ -14,14 +14,14 @@ public class CreatorTransactionPanel : MonoBehaviour, IDisposable {
 
     [SerializeField] private TextMeshProUGUI _infoText;
     
-    private CategoryConfigs _configs;
+    private IncomeCategoryViewConfigs _configs;
     private Category _category;
     private List<TransactionData> _transactionDatas;
 
     public IEnumerable<TransactionData> TransactionDatas => _transactionDatas;
 
 
-    public void Init(CategoryConfigs configs) {
+    public void Init(IncomeCategoryViewConfigs configs) {
         _configs = configs;
 
         _transactionDatas = new List<TransactionData>();

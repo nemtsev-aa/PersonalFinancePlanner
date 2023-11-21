@@ -7,7 +7,7 @@ public class TransactionManager {
     private TransactionFactory _transactionFactory;
     private IEnumerable<TransactionData> _transactionDatas;
 
-    public TransactionManager(CategoryConfigs configs, IEnumerable<TransactionData> transactionDatas) {
+    public TransactionManager(IncomeCategoryViewConfigs configs, IEnumerable<TransactionData> transactionDatas) {
         _transactionDatas = transactionDatas;
 
         Transactions = new List<Transaction>();

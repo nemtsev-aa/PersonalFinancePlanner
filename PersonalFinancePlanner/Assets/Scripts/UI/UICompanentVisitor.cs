@@ -13,4 +13,10 @@ public class UICompanentVisitor : ICompanentVisitor {
     public void Visit(UICompanentConfig companent) => Visit((dynamic)companent);
 
     public void Visit(TransactionViewConfig panel) => Companent = _companents.FirstOrDefault(companent => companent is TransactionView);
+
+    public void Visit(IncomeCategoryViewConfig categoryView) => Companent = _companents.FirstOrDefault(companent => companent is CategoryView);
+
+    public void Visit(ExpenditureCategoryViewConfig categoryView) => Companent = _companents.FirstOrDefault(companent => companent is CategoryView);
+
+    public void Visit(IconVariantViewConfig iconVariantView) => Companent = _companents.FirstOrDefault(companent => companent is IconVariantView);
 }

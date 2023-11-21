@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TransactionsWindow : MonoBehaviour, IDisposable {
-    [SerializeField] private CategoryConfigs _configs;
+    [SerializeField] private IncomeCategoryViewConfigs _configs;
     [Space(10)]
     [SerializeField] private CreatorTransactionPanel _creatorTransaction;
     [SerializeField] private TransactionsListPanel _transactionList;
