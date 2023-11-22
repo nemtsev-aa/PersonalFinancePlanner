@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsDialog : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class SettingsDialog : Dialog {
+    public override void Init() {
+        base.Init();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public override void AddListeners() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void RemoveListeners() {
+        throw new System.NotImplementedException();
     }
 }

@@ -12,28 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b70cd36cc33ef84aa1ba2ef6582f4fb, type: 3}
   m_Name: SelectorViewConfigs
   m_EditorClassIdentifier: 
+  <HeaderColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <Frame>k__BackingField: {fileID: 0}
   <Configs>k__BackingField:
   - <Type>k__BackingField: 0
     <Name>k__BackingField: "\u041C\u0435\u043D\u044E"
     <Icon>k__BackingField: {fileID: 21300000, guid: bbedd3ef00ef3364da7d8573f5336c88,
       type: 3}
-  - <Type>k__BackingField: 2
-    <Name>k__BackingField: "\u0410\u0432\u0442\u043E\u0440\u044B"
+  - <Type>k__BackingField: 1
+    <Name>k__BackingField: "\u0422\u0440\u0430\u043D\u0437\u0430\u043A\u0446\u0438\u0438"
     <Icon>k__BackingField: {fileID: 21300000, guid: 0885bbf17ec2c7e45b9d9f26deb6b3b1,
       type: 3}
-  - <Type>k__BackingField: 1
+  - <Type>k__BackingField: 2
     <Name>k__BackingField: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438"
     <Icon>k__BackingField: {fileID: 21300000, guid: 25d9d0ba5938c404283b7415c1929a5e,
       type: 3}
-  - <Type>k__BackingField: 2
+  - <Type>k__BackingField: 3
     <Name>k__BackingField: "\u0426\u0435\u043B\u0438"
     <Icon>k__BackingField: {fileID: 21300000, guid: 7a8db03ecb3fe0240bded519db08e420,
       type: 3}
-  - <Type>k__BackingField: 3
+  - <Type>k__BackingField: 4
     <Name>k__BackingField: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"
     <Icon>k__BackingField: {fileID: 21300000, guid: 809ad84259cf01b4c94eac08dd9d6bdc,
       type: 3}
-  - <Type>k__BackingField: 3
+  - <Type>k__BackingField: 5
     <Name>k__BackingField: "\u0410\u0432\u0442\u043E\u0440\u044B"
-    <Icon>k__BackingField: {fileID: 21300000, guid: 187e29234e866834fbf0f8073093703b,
+    <Icon>k__BackingField: {fileID: 21300000, guid: 0885bbf17ec2c7e45b9d9f26deb6b3b1,
       type: 3}

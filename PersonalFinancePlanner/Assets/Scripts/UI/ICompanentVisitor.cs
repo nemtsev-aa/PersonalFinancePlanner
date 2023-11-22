@@ -4,4 +4,5 @@ public interface ICompanentVisitor {
     void Visit(IncomeCategoryViewConfig categoryView);
     void Visit(ExpenditureCategoryViewConfig categoryView);
     void Visit(IconVariantViewConfig iconVariantView);
+    void Visit(SelectorViewConfig selectorView);
 }

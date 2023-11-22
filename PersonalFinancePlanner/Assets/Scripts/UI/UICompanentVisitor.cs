@@ -19,4 +19,6 @@ public class UICompanentVisitor : ICompanentVisitor {
     public void Visit(ExpenditureCategoryViewConfig categoryView) => Companent = _companents.FirstOrDefault(companent => companent is CategoryView);
 
     public void Visit(IconVariantViewConfig iconVariantView) => Companent = _companents.FirstOrDefault(companent => companent is IconVariantView);
+
+    public void Visit(SelectorViewConfig selectorView) => Companent = _companents.FirstOrDefault(companent => companent is SelectorView);
 }

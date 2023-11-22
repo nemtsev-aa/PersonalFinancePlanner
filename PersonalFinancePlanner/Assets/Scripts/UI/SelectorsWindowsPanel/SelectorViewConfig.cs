@@ -3,7 +3,7 @@ using UnityEngine;
 
 [Serializable]
 public class SelectorViewConfig : UICompanentConfig {
-    [field: SerializeField] public WindowTypes Type { get; private set; }
+    [field: SerializeField] public DialogTypes Type { get; private set; }
     [field: SerializeField] public string Name { get; private set; }
     [field: SerializeField] public Sprite Icon { get; private set; }
 

@@ -9,11 +9,8 @@ public class UICompanentsFactory : ScriptableObject {
 
     private UICompanent Companent => _visitor.Companent;
 
-    public void Init() {
-        _visitor = new UICompanentVisitor(_companents);
-    }
-
     public T Get<T>(UICompanentConfig companent, RectTransform parent) where T : UICompanent {
+        _visitor = new UICompanentVisitor(_companents);
         _visitor.Visit(companent);
 
         return (T)Instantiate(Companent, parent);

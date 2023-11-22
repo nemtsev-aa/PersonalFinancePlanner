@@ -14,6 +14,7 @@ public abstract class Dialog : MonoBehaviour, IDisposable {
     }
 
     public virtual void Close() {
+        Show(false);
         OnClosed?.Invoke();
     }
 

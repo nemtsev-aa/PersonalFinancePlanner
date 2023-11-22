@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class SelectorsWindowsPanelConfig : UICompanentConfig {
+public class DialogSwitcherViewConfig : UICompanentConfig {
     [field: SerializeField] public Color BackgroundColor { get; private set; }
     [field: SerializeField] public Sprite Frame { get; private set; }
     public SelectorViewConfigs Configs { get; private set; }

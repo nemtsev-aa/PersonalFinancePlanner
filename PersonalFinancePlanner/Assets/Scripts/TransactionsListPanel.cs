@@ -11,7 +11,6 @@ public class TransactionsListPanel : MonoBehaviour {
 
     public void Init(List<TransactionViewConfig> transactionViewConfigs) {
         _transactionViewConfigs = transactionViewConfigs;
-        _companentsFactory.Init();
 
         _transactionViews = new List<TransactionView>();
         CreateTransactionViews();

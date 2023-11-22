@@ -1,5 +1,5 @@
-public enum WindowTypes {
-    MainMenu,
+public enum DialogTypes {
+    DesktopDialog,
     Transactions,
     Category,
     FinancialGoals,
