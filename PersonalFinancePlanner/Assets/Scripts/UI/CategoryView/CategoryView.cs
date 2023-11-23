@@ -2,8 +2,9 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CategoryView : UICompanent {
+public class CategoryView : UICompanent, IPointerClickHandler {
     public event Action<CategoryView> Selected;
 
     [SerializeField] private TextMeshProUGUI _nameText;
@@ -22,7 +23,5 @@ public class CategoryView : UICompanent {
         _icon.sprite = Config.Icon;
     }
 
-    private void OnMouseDown() {
-        Selected?.Invoke(this);
-    }
+    public void OnPointerClick(PointerEventData eventData) => Selected?.Invoke(this);
 }

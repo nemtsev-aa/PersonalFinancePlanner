@@ -34,4 +34,6 @@ public class UIManager : MonoBehaviour {
     private void OnActiveDialogSelectorChanged(SelectorView selector) {
         _dialogSwitcher.ShowDialog(selector.Config.Type);
     }
+
+
 }

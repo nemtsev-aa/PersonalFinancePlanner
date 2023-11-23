@@ -1,4 +1,3 @@
-using System.Collections;
 using System;
 using UnityEngine;
 
@@ -7,7 +6,15 @@ public class ExpenditureCategoryViewConfig : CategoryViewConfig {
     public ExpenditureCategoryViewConfig(string name, Sprite icon) : base(name, icon) {
     }
 
+    [field: SerializeField] public float Limit { get; private set; }
+    
     public override void OnValidate() {
+        if (Limit == 0)
+            throw new ArgumentNullException("Limit is empty");
+    }
 
+    public override Category GetCategory() {
+        CategoryData data = new CategoryData(Name, Icon, Limit, Value);
+        return new Category(data);
     }
 }

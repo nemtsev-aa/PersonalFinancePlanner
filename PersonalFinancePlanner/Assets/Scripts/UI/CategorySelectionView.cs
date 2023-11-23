@@ -8,25 +8,22 @@ public class CategorySelectionView : MonoBehaviour, IDisposable {
     [SerializeField] private Transform SelectorContainer;
     [SerializeField] private Button _selectCategory;
 
-    [SerializeField] private Transform CategoryViewContainer;
+    [field: SerializeField] public Transform CategoryViewContainer { get; private set; }
 
     private CategoryView _categoryView;
 
-    public void Init() { 
+    public void Init() {
         AddListeners();
         Reset();
     }
 
     public void Reset() {
         ShowCategoryView(false);
-        ShowSelector(false);
+        ShowSelector(true);
         _categoryView = null;
     }
 
-    public void SetCategoryView(CategoryView view) {
-        _categoryView = view;
-        ShowCategoryView(true);
-    }
+    public void ShowCategoryView() => ShowCategoryView(true);
 
     private void AddListeners() {
         _selectCategory.onClick.AddListener(SelectCategoryClick);

@@ -16,6 +16,11 @@ public class DateView : MonoBehaviour, IDisposable {
         GetCurrentDate();
     }
 
+    public void SetDate(DateTime dateTime) {
+        _currentDate = dateTime;
+        ShowDate();
+    }
+
     public void Reset() {
         GetCurrentDate();
     }

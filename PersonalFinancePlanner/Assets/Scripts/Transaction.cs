@@ -6,6 +6,6 @@ public class Transaction {
     }
 
     public override string ToString() {
-        return string.Format($"Описание: {TransactionData.Description}, Сумма: {TransactionData.Amount}, Категория: {TransactionData.Category.Name}");
+        return string.Format($"Описание: {TransactionData.Description}, Сумма: {TransactionData.Amount}, Категория: {TransactionData.Category.CategoryData.Name}");
     }
 }

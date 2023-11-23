@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TransactionsDialog : Dialog {
     [SerializeField] private CategoryViewConfigs _configs;
+    [SerializeField] private UICompanentsFactory _companentsFactory;
+
     [SerializeField] private List<UIPanel> _panels = new List<UIPanel>();
 
     private CreatorTransactionPanel _creatorTransactionPanel;
@@ -12,8 +14,8 @@ public class TransactionsDialog : Dialog {
     private TransactionsListPanel _transactionListPanel;
 
     public override void Init() {
-        base.Init();
         InitializationPanels();
+        base.Init();
     }
 
     private void InitializationPanels() {
@@ -21,24 +23,24 @@ public class TransactionsDialog : Dialog {
         _creatorTransactionPanel.Init();
 
         _selectCategoryPanel = GetPanelByType<SelectCategoryPanel>();
-        _selectCategoryPanel.Init();
+        _selectCategoryPanel.Init(_configs, _companentsFactory);
 
         _transactionListPanel = GetPanelByType<TransactionsListPanel>();
         _transactionListPanel.Init();
     }
 
-    private T GetPanelByType<T>() where T : UIPanel {
-        return (T)_panels.FirstOrDefault(panel => panel is T);
-    }
-
     public override void AddListeners() {
         _creatorTransactionPanel.ShowCategorySelectionPanel += OnShowCategorySelectionPanel;
-        _selectCategoryPanel.CategorySelected += OnCategorySelected;
+        _selectCategoryPanel.CategoryViewSelected += OnCategorySelected;
+        _transactionListPanel.EditTransaction += OnEditTransaction;
 
     }
 
+
+
     public override void RemoveListeners() {
-       
+        _creatorTransactionPanel.ShowCategorySelectionPanel -= OnShowCategorySelectionPanel;
+        _selectCategoryPanel.CategoryViewSelected -= OnCategorySelected;
     }
 
     public void ShowCreatorTransaction(TransactionData data) {
@@ -50,7 +52,10 @@ public class TransactionsDialog : Dialog {
     
     private void OnShowCategorySelectionPanel() => _selectCategoryPanel.Show(true);
 
-    private void OnCategorySelected(Category category) => _creatorTransactionPanel.SetCategory(category);
+    private void OnCategorySelected(CategoryView category) {
+        _selectCategoryPanel.Show(false);
+        _creatorTransactionPanel.SetCategoryView(category);
+    } 
 
     private void ShowListClick() {
         //_showList.gameObject.SetActive(false);
@@ -77,7 +82,15 @@ public class TransactionsDialog : Dialog {
         return newTransactionViewConfigList;
     }
 
+    private void OnEditTransaction(Transaction transaction) {
+        _creatorTransactionPanel.SetTransactionData(transaction.TransactionData);
+    }
+
     private void ShowCreatorClick() {
 
+    }
+
+    private T GetPanelByType<T>() where T : UIPanel {
+        return (T)_panels.FirstOrDefault(panel => panel is T);
     }
 }

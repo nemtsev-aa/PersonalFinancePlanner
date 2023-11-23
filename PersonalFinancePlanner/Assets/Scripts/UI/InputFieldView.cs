@@ -13,6 +13,11 @@ public class InputFieldView : MonoBehaviour, IDisposable {
         AddListeners();
     }
 
+    public void SetValue(string value) {
+        Value = value;
+        ShowValue();
+    }
+
     public void Reset() => ClearFieldClick();
 
     private void AddListeners() {
@@ -20,11 +25,13 @@ public class InputFieldView : MonoBehaviour, IDisposable {
         _clearField.onClick.AddListener(ClearFieldClick);
     }
 
+    private void ShowValue() => _inputField.text = Value;
+    
     private void InputFieldValueChanged(string value) => Value = value;
 
     private void ClearFieldClick() {
-        Value = null;
-        _inputField.text = "";
+        Value = "";
+        ShowValue();
     } 
 
     public void Dispose() {

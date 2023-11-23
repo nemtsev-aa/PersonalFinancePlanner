@@ -1,11 +1,12 @@
 using UnityEngine;
 
 public class Category {
-    public Category(string name, Sprite icon) {
-        Name = name;
-        Icon = icon;
-    }
+    public CategoryData CategoryData { get; private set; }
 
-    public string Name { get; private set; }
-    public Sprite Icon { get; private set; }
+    public Category(CategoryData categoryData) {
+        CategoryData = categoryData;
+    }
+    public override string ToString() {
+        return string.Format($"Описание: {CategoryData.Name}, Лимит: {CategoryData.Limit}, Значение: {CategoryData.Value}");
+    }
 }

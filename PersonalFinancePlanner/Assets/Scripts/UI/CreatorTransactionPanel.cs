@@ -16,16 +16,16 @@ public class CreatorTransactionPanel : UIPanel {
     [SerializeField] private Button _clearButton;
 
     [SerializeField] private TextMeshProUGUI _infoText;
-    
-    private IncomeCategoryViewConfigs _configs;
-    private Category _category;
+
+
+    private CategoryViewConfig _category;
     private List<TransactionData> _transactionDatas;
+    private TransactionData _data;
 
     public IEnumerable<TransactionData> TransactionDatas => _transactionDatas;
 
-    public void Init(IncomeCategoryViewConfigs configs) {
-        _configs = configs;
-
+    public override void Init() {
+        base.Init();
         _transactionDatas = new List<TransactionData>();
 
         AddListeners();
@@ -46,17 +46,32 @@ public class CreatorTransactionPanel : UIPanel {
     }
 
     public void SetTransactionData(TransactionData data) {
+        _data = data;
+        FillInFields();
+    }
+
+    private void FillInFields() {
+        _dateView.SetDate(_data.Date);
+        _amountInputView.SetValue($"{_data.Amount}");
+        _descriptionInputView.SetValue($"{_data.Description}");
         
     }
 
-    public void SetCategory(Category category) => _category = category;
+    public void SetCategoryView(CategoryView categoryView) {
+        _category = categoryView.Config;
+        categoryView.gameObject.transform.SetParent(_categorySelectionView.CategoryViewContainer, false);
+        categoryView.GetComponent<RectTransform>().localScale = Vector3.one * 2;
+
+        _categorySelectionView.ShowCategoryView();
+    }
 
     private void CreateCategoryViewPanel() => ShowCategorySelectionPanel?.Invoke();
-    
+
     private void CreateTransaction() {
-        TransactionData newTransactionData = new TransactionData(_descriptionInputView.Value, float.Parse(_amountInputView.Value), _category);
-        
-        _transactionDatas.Add(newTransactionData);
+        Category category = _category.GetCategory();
+        //TransactionData newTransactionData = new TransactionData(_descriptionInputView.Value, float.Parse(_amountInputView.Value), category);
+
+        //_transactionDatas.Add(newTransactionData);
     }
 
     private void ClearFields() {

@@ -24,6 +24,8 @@ public class DialogSwitcher {
     public void ShowDialog(DialogTypes type) {
         if (_activeDialog != null) _activeDialog.Show(false);
         _activeDialog = _dialogFactory.GetDialogByType(type);
+        
+        _activeDialog.Init();
         _activeDialog.Show(true);
     }
 }

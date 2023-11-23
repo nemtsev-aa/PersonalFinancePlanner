@@ -7,18 +7,18 @@ public class TransactionView : UICompanent {
     [field: SerializeField] public TextMeshProUGUI DescriptionText { get; private set; }
     [field: SerializeField] public TextMeshProUGUI AmountText { get; private set; }
 
-    private TransactionViewConfig _config;
-    
+    public TransactionViewConfig Config { get; private set; }
+
     public void Init(TransactionViewConfig config) {
-        _config = config;
+        Config = config;
 
         UpdateCompanents();
     }
 
     private void UpdateCompanents() {
-        TransactionData transaction = _config.Transaction.TransactionData;
+        TransactionData transaction = Config.Transaction.TransactionData;
 
-        CategoryImage.sprite = transaction.Category.Icon;
+        CategoryImage.sprite = transaction.Category.CategoryData.Icon;
         DescriptionText.text = transaction.Description;
         AmountText.text = $"{ transaction.Amount}";
     }
