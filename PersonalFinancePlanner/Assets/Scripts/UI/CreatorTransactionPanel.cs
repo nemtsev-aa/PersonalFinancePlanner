@@ -4,10 +4,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CreatorTransactionPanel : MonoBehaviour, IDisposable {
-    [SerializeField] private TMP_Dropdown _categoryDropdown;
-    [SerializeField] private TMP_InputField _descriptionInputField;
-    [SerializeField] private TMP_InputField _amountInputField;
+public class CreatorTransactionPanel : UIPanel {
+    public event Action ShowCategorySelectionPanel;
+
+    [SerializeField] private DateView _dateView;
+    [SerializeField] private InputFieldView _amountInputView;
+    [SerializeField] private InputFieldView _descriptionInputView;
+    [SerializeField] private CategorySelectionView _categorySelectionView;
 
     [SerializeField] private Button _applayButton;
     [SerializeField] private Button _clearButton;
@@ -20,55 +23,52 @@ public class CreatorTransactionPanel : MonoBehaviour, IDisposable {
 
     public IEnumerable<TransactionData> TransactionDatas => _transactionDatas;
 
-
     public void Init(IncomeCategoryViewConfigs configs) {
         _configs = configs;
 
         _transactionDatas = new List<TransactionData>();
 
-        CreateDropDownList();
-        CreateSubscribers();
+        AddListeners();
+        InitializationViews();
     }
 
-    private void CreateDropDownList() {
-        TMP_Dropdown.OptionData optionData;
-        List<TMP_Dropdown.OptionData> dropdownData = new List<TMP_Dropdown.OptionData>();
-
-        foreach (var iConfig in _configs.Configs) {
-            optionData = new TMP_Dropdown.OptionData(iConfig.Name, iConfig.Icon);
-            dropdownData.Add(optionData);
-        }
-
-        _categoryDropdown.AddOptions(dropdownData);
+    private void InitializationViews() {
+        _dateView.Init();
+        _amountInputView.Init();
+        _descriptionInputView.Init();
+        _categorySelectionView.Init();
     }
 
-    private void CreateSubscribers() {
+    public override void AddListeners() {
         _applayButton.onClick.AddListener(CreateTransaction);
         _clearButton.onClick.AddListener(ClearFields);
-        _categoryDropdown.onValueChanged.AddListener(SetCategory);
+        _categorySelectionView.SelectCategory += CreateCategoryViewPanel;
     }
 
-    private void SetCategory(int index) {
-        TMP_Dropdown.OptionData optionData = _categoryDropdown.options[index];
-        _category = new Category(optionData.text, optionData.image);
+    public void SetTransactionData(TransactionData data) {
+        
     }
 
+    public void SetCategory(Category category) => _category = category;
+
+    private void CreateCategoryViewPanel() => ShowCategorySelectionPanel?.Invoke();
+    
     private void CreateTransaction() {
-        SetCategory(_categoryDropdown.value);
-        TransactionData newTransactionData = new TransactionData(_descriptionInputField.text, float.Parse(_amountInputField.text), _category);
+        TransactionData newTransactionData = new TransactionData(_descriptionInputView.Value, float.Parse(_amountInputView.Value), _category);
         
         _transactionDatas.Add(newTransactionData);
     }
 
     private void ClearFields() {
-        _descriptionInputField.text = "";
-        _amountInputField.text = "";
+        _dateView.Reset();
+        _amountInputView.Reset();
+        _descriptionInputView.Reset();
+
         _category = null;
     }
 
-    public void Dispose() {
+    public override void RemoveListeners() {
         _applayButton.onClick.RemoveListener(CreateTransaction);
         _clearButton.onClick.RemoveListener(ClearFields);
-        _categoryDropdown.onValueChanged.RemoveListener(SetCategory);
     }
 }

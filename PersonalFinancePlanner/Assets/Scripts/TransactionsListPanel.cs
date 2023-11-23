@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransactionsListPanel : MonoBehaviour {
+public class TransactionsListPanel : UIPanel {
     [SerializeField] private RectTransform _transactionViewParent;
     [SerializeField] private UICompanentsFactory _companentsFactory;
 
@@ -14,6 +14,15 @@ public class TransactionsListPanel : MonoBehaviour {
 
         _transactionViews = new List<TransactionView>();
         CreateTransactionViews();
+    }
+
+
+    public override void AddListeners() {
+        
+    }
+
+    public override void RemoveListeners() {
+        
     }
 
     private void CreateTransactionViews() {

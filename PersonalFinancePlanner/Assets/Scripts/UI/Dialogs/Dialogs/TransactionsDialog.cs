@@ -2,48 +2,72 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TransactionsDialog : Dialog {
-    [SerializeField] private IncomeCategoryViewConfigs _configs;
-    [Space(10)]
-    [SerializeField] private CreatorTransactionPanel _creatorTransaction;
-    [SerializeField] private TransactionsListPanel _transactionList;
+    [SerializeField] private CategoryViewConfigs _configs;
+    [SerializeField] private List<UIPanel> _panels = new List<UIPanel>();
 
-    [SerializeField] private Button _showList;
-    [SerializeField] private Button _showCreator;
+    private CreatorTransactionPanel _creatorTransactionPanel;
+    private SelectCategoryPanel _selectCategoryPanel;
+    private TransactionsListPanel _transactionListPanel;
 
     public override void Init() {
         base.Init();
-        _creatorTransaction.Init(_configs);
+        InitializationPanels();
+    }
+
+    private void InitializationPanels() {
+        _creatorTransactionPanel = GetPanelByType<CreatorTransactionPanel>();
+        _creatorTransactionPanel.Init();
+
+        _selectCategoryPanel = GetPanelByType<SelectCategoryPanel>();
+        _selectCategoryPanel.Init();
+
+        _transactionListPanel = GetPanelByType<TransactionsListPanel>();
+        _transactionListPanel.Init();
+    }
+
+    private T GetPanelByType<T>() where T : UIPanel {
+        return (T)_panels.FirstOrDefault(panel => panel is T);
     }
 
     public override void AddListeners() {
-        _showList.onClick.AddListener(ShowListClick);
-        _showCreator.onClick.AddListener(ShowCreatorClick);
+        _creatorTransactionPanel.ShowCategorySelectionPanel += OnShowCategorySelectionPanel;
+        _selectCategoryPanel.CategorySelected += OnCategorySelected;
+
     }
 
     public override void RemoveListeners() {
-        _showList.onClick.RemoveListener(ShowListClick);
-        _showCreator.onClick.RemoveListener(ShowCreatorClick);
+       
     }
 
+    public void ShowCreatorTransaction(TransactionData data) {
+        _creatorTransactionPanel.SetTransactionData(data);
+        _creatorTransactionPanel.Show(true);
+    }
+
+    public void ShowTransactionsList() => _transactionListPanel.Show(true);
+    
+    private void OnShowCategorySelectionPanel() => _selectCategoryPanel.Show(true);
+
+    private void OnCategorySelected(Category category) => _creatorTransactionPanel.SetCategory(category);
+
     private void ShowListClick() {
-        _showList.gameObject.SetActive(false);
-        _showCreator.gameObject.SetActive(true);
+        //_showList.gameObject.SetActive(false);
+        //_showCreator.gameObject.SetActive(true);
 
-        _creatorTransaction.gameObject.SetActive(false);
-        _transactionList.gameObject.SetActive(true);
+        //_creatorTransactionPanel.gameObject.SetActive(false);
+        //_transactionListPanel.gameObject.SetActive(true);
 
-        _transactionList.Init(CrateTransactionViewConfigs());
+        _transactionListPanel.Init(CrateTransactionViewConfigs());
     }
 
     private List<TransactionViewConfig> CrateTransactionViewConfigs() {
-        if (_creatorTransaction.TransactionDatas.Count() == 0)
+        if (_creatorTransactionPanel.TransactionDatas.Count() == 0)
             throw new ArgumentNullException($"TransactionDataList is empty");
 
         List<TransactionViewConfig> newTransactionViewConfigList = new List<TransactionViewConfig>();
-        TransactionManager transactionManager = new TransactionManager(_configs, _creatorTransaction.TransactionDatas);
+        TransactionManager transactionManager = new TransactionManager(_configs, _creatorTransactionPanel.TransactionDatas);
 
         foreach (var iTransaction in transactionManager.Transactions) {
             TransactionViewConfig newTransactionViewConfig = new TransactionViewConfig(iTransaction);
@@ -54,11 +78,6 @@ public class TransactionsDialog : Dialog {
     }
 
     private void ShowCreatorClick() {
-        _showCreator.gameObject.SetActive(false);
-        _showList.gameObject.SetActive(true);
 
-        _transactionList.gameObject.SetActive(false);
-        _creatorTransaction.gameObject.SetActive(true);
     }
-
 }

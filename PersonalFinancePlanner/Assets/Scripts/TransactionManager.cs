@@ -7,7 +7,7 @@ public class TransactionManager {
     private TransactionFactory _transactionFactory;
     private IEnumerable<TransactionData> _transactionDatas;
 
-    public TransactionManager(IncomeCategoryViewConfigs configs, IEnumerable<TransactionData> transactionDatas) {
+    public TransactionManager(CategoryViewConfigs configs, IEnumerable<TransactionData> transactionDatas) {
         _transactionDatas = transactionDatas;
 
         Transactions = new List<Transaction>();
@@ -34,8 +34,8 @@ public class TransactionManager {
     }
 
     private void CreateTransaction(TransactionData transactionData) {
-        Transaction newTransaction = _transactionFactory.Get(transactionData);
-        Transactions.Add(newTransaction);
+        //Transaction newTransaction = _transactionFactory.Get(transactionData);
+        //Transactions.Add(newTransaction);
     }
 
     
