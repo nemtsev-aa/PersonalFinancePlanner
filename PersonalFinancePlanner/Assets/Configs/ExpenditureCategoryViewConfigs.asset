@@ -33,8 +33,28 @@ MonoBehaviour:
       type: 3}
     <Value>k__BackingField: 0
     <Limit>k__BackingField: 5000
-  - <Name>k__BackingField: "\u0418\u0433\u0440\u0443\u0448\u043A\u0438"
-    <Icon>k__BackingField: {fileID: 21300000, guid: 64f3fce3865a32644b8eef82cff1edf4,
+  - <Name>k__BackingField: "\u0421\u0432\u044F\u0437\u044C"
+    <Icon>k__BackingField: {fileID: 21300000, guid: 432a15fd43f3f254f9c7f0b40e5cb728,
       type: 3}
     <Value>k__BackingField: 0
-    <Limit>k__BackingField: 1000
+    <Limit>k__BackingField: 700
+  - <Name>k__BackingField: "\u041E\u0434\u0435\u0436\u0434\u0430"
+    <Icon>k__BackingField: {fileID: 21300000, guid: 97ee0bee612bbf340a86d78b317ef942,
+      type: 3}
+    <Value>k__BackingField: 0
+    <Limit>k__BackingField: 700
+  - <Name>k__BackingField: "\u041F\u0438\u0442\u043E\u043C\u0446\u044B"
+    <Icon>k__BackingField: {fileID: 21300000, guid: 3b6fea745292ac04aac4fc8544c16ecd,
+      type: 3}
+    <Value>k__BackingField: 0
+    <Limit>k__BackingField: 3000
+  - <Name>k__BackingField: "\u041A\u0430\u0444\u0435"
+    <Icon>k__BackingField: {fileID: 21300000, guid: 397fbe0a3f9aa0541b1dedc67e1b0856,
+      type: 3}
+    <Value>k__BackingField: 0
+    <Limit>k__BackingField: 2000
+  - <Name>k__BackingField: "\u041A\u0438\u043D\u043E"
+    <Icon>k__BackingField: {fileID: 21300000, guid: 961af17161592b8408c4c081091440fe,
+      type: 3}
+    <Value>k__BackingField: 0
+    <Limit>k__BackingField: 2000

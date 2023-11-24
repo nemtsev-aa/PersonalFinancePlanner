@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour {
+public class UIManager : MonoBehaviour, IDisposable {
     [SerializeField] private SelectorViewConfigs _selectorViewConfigs;
     [SerializeField] private DialogFactory _dialogFactory;
     [SerializeField] private UICompanentsFactory _companentsFactory;
@@ -10,30 +11,40 @@ public class UIManager : MonoBehaviour {
     [SerializeField] private DialogSwitcherView _switcherView;
 
     private DialogSwitcher _dialogSwitcher;
+    private List<Dialog> _dialogs;
 
     private void Start() {
-        _dialogSwitcher = new DialogSwitcher(_dialogFactory, _dialogsParent);
-        List<SelectorView> selectors = CrateSelectorViews();
-        _switcherView.Init(selectors);
-        _switcherView.ActiveSelectorChanged += OnActiveDialogSelectorChanged;
+        _switcherView.Init(_selectorViewConfigs, _companentsFactory);
+        _dialogSwitcher = new DialogSwitcher(_dialogFactory, _dialogsParent, _switcherView);
+        _dialogs = _dialogSwitcher.GetDialogList();
+        
+        AddListeners();
     }
 
-    private List<SelectorView> CrateSelectorViews() {
-        List<SelectorView> selectors = new List<SelectorView>();
-
-        foreach (var iSelectorViewConfig in _selectorViewConfigs.Configs) {
-            SelectorView newSelectorView = _companentsFactory.Get<SelectorView>(iSelectorViewConfig, _switcherView.SelectorsParent);
-            newSelectorView.Init(iSelectorViewConfig, _selectorViewConfigs.HeaderColor);
-
-            selectors.Add(newSelectorView);
+    private void AddListeners() {
+        foreach (var iDialog in _dialogs) {
+            iDialog.ShowDialogSwitcherSelected += OnShowDialogSwitcherSelected;
         }
 
-        return selectors;
+        _dialogSwitcher.GetDialogByType(DialogTypes.DesktopDialog).TryGetComponent(out DesktopDialog desktop);
+        _dialogSwitcher.GetDialogByType(DialogTypes.Transactions).TryGetComponent(out TransactionsDialog transactions);
+
+        desktop.IncomeTransactionSelected += () => _dialogSwitcher.ShowDialog(DialogTypes.Category);
+        desktop.IncomeTransactionSelected += () => transactions.ShowCreatorTransaction(true);
+
     }
 
-    private void OnActiveDialogSelectorChanged(SelectorView selector) {
-        _dialogSwitcher.ShowDialog(selector.Config.Type);
+    private void OnShowDialogSwitcherSelected() {
+        _switcherView.Show(true);
     }
 
+    public void ShowTransactionCreatorPanel() {
 
+    }
+
+    public void Dispose() {
+        foreach (var iDialog in _dialogs) {
+            iDialog.ShowDialogSwitcherSelected -= OnShowDialogSwitcherSelected;
+        }
+    }
 }

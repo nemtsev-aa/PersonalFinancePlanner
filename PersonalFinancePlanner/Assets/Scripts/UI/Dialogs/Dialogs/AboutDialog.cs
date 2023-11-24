@@ -10,10 +10,10 @@ public class AboutDialog : Dialog {
     }
 
     public override void AddListeners() {
-
+        base.AddListeners();
     }
 
     public override void RemoveListeners() {
-
+        base.RemoveListeners();
     }
 }

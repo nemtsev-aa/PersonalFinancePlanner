@@ -30,22 +30,29 @@ public class TransactionsDialog : Dialog {
     }
 
     public override void AddListeners() {
+        base.AddListeners();
         _creatorTransactionPanel.ShowCategorySelectionPanel += OnShowCategorySelectionPanel;
         _selectCategoryPanel.CategoryViewSelected += OnCategorySelected;
         _transactionListPanel.EditTransaction += OnEditTransaction;
 
     }
 
-
-
     public override void RemoveListeners() {
+        base.AddListeners();
         _creatorTransactionPanel.ShowCategorySelectionPanel -= OnShowCategorySelectionPanel;
         _selectCategoryPanel.CategoryViewSelected -= OnCategorySelected;
+        _transactionListPanel.EditTransaction -= OnEditTransaction;
     }
 
-    public void ShowCreatorTransaction(TransactionData data) {
-        _creatorTransactionPanel.SetTransactionData(data);
-        _creatorTransactionPanel.Show(true);
+    public void ShowCreatorTransaction(bool status) {
+        
+
+        //if (status) {
+            
+        //}
+
+        //_creatorTransactionPanel.SetTransactionData(data);
+        //_creatorTransactionPanel.Show(true);
     }
 
     public void ShowTransactionsList() => _transactionListPanel.Show(true);

@@ -545,7 +545,7 @@ PrefabInstance:
     - target: {fileID: 4683248887235595050, guid: a24713490adae604abc49c4b01a78f06,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4683248887235595050, guid: a24713490adae604abc49c4b01a78f06,
         type: 3}
@@ -565,7 +565,7 @@ PrefabInstance:
     - target: {fileID: 4683248887235595050, guid: a24713490adae604abc49c4b01a78f06,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4683248887235595050, guid: a24713490adae604abc49c4b01a78f06,
         type: 3}
@@ -647,11 +647,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogSwitcherView
       objectReference: {fileID: 0}
-    - target: {fileID: 4683248887637894000, guid: a24713490adae604abc49c4b01a78f06,
-        type: 3}
-      propertyPath: m_Spacing
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 4683248887637894002, guid: a24713490adae604abc49c4b01a78f06,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -660,16 +655,6 @@ PrefabInstance:
     - target: {fileID: 4683248887637894002, guid: a24713490adae604abc49c4b01a78f06,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4683248887637894002, guid: a24713490adae604abc49c4b01a78f06,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5731954468550467462, guid: a24713490adae604abc49c4b01a78f06,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

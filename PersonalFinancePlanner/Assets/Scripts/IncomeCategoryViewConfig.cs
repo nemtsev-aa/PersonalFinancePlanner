@@ -3,6 +3,8 @@ using System;
 
 [Serializable]
 public class IncomeCategoryViewConfig : CategoryViewConfig {
+    public event Action IncomeDataChanged;
+
     public IncomeCategoryViewConfig(string name, Sprite icon) : base(name, icon) {
     }
 
@@ -16,5 +18,14 @@ public class IncomeCategoryViewConfig : CategoryViewConfig {
     public override Category GetCategory() {
         CategoryData data = new CategoryData(Name, Icon, Target, Value);
         return new Category(data);
+    }
+
+    public override void SetCategoryData(CategoryData data) {
+        Name = data.Name;
+        Icon = data.Icon;
+        Target = data.Limit;
+        Value = data.Value;
+
+        IncomeDataChanged?.Invoke();
     }
 }

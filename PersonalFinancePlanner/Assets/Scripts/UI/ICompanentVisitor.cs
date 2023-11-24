@@ -5,4 +5,6 @@ public interface ICompanentVisitor {
     void Visit(ExpenditureCategoryViewConfig categoryView);
     void Visit(IconVariantViewConfig iconVariantView);
     void Visit(SelectorViewConfig selectorView);
+    void Visit(IncomeWidgetConfig incomWidget);
+    void Visit(ExpenditureWidgetConfig incomWidget);
 }

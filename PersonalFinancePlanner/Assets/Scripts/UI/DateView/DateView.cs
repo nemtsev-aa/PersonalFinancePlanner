@@ -11,8 +11,9 @@ public class DateView : MonoBehaviour, IDisposable {
     private DateTime _currentDate;
 
     public void Init() {
-        AddListeners();
+        _currentDate = DateTime.Now;
 
+        AddListeners();
         GetCurrentDate();
     }
 
@@ -30,14 +31,13 @@ public class DateView : MonoBehaviour, IDisposable {
         _yesterDateButton.onClick.AddListener(YesterDateButtonClick);
     }
 
-    private void GetCurrentDate(double value = 0) {
-        _currentDate = DateTime.Now;
-        _currentDate.AddDays(value);
+    private void GetCurrentDate(int value = 0) {
+        _currentDate = _currentDate.AddDays(value);
 
         ShowDate();
     }
 
-    private void ShowDate() => _dateText.text = _currentDate.ToString("MM/dd/yyyy");
+    private void ShowDate() => _dateText.text = _currentDate.ToString("dd/MM/yyyy");
 
     private void FollowDateButtonClick() => GetCurrentDate(1);
 

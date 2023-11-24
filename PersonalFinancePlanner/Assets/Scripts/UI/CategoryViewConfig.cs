@@ -7,9 +7,9 @@ public abstract class CategoryViewConfig : UICompanentConfig {
         Icon = icon;
     }
 
-    [field: SerializeField] public string Name { get; private set; }
-    [field: SerializeField] public Sprite Icon { get; private set; }
-    [field: SerializeField] public float Value { get; private set; }
+    [field: SerializeField] public string Name { get; protected set; }
+    [field: SerializeField] public Sprite Icon { get; protected set; }
+    [field: SerializeField] public float Value { get; protected set; }
 
     public override void OnValidate() {
         if (Name == null)
@@ -23,4 +23,7 @@ public abstract class CategoryViewConfig : UICompanentConfig {
     }
 
     public abstract Category GetCategory();
+
+    public abstract void SetCategoryData(CategoryData data);
+
 }

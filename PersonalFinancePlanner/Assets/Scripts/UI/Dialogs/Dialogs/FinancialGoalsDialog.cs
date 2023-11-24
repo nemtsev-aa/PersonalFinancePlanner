@@ -11,10 +11,10 @@ public class FinancialGoalsDialog : Dialog {
     }
 
     public override void AddListeners() {
-        throw new System.NotImplementedException();
+        base.AddListeners();
     }
 
     public override void RemoveListeners() {
-        throw new System.NotImplementedException();
+        base.RemoveListeners();
     }
 }

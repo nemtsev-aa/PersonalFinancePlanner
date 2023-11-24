@@ -3,7 +3,11 @@ using UnityEngine;
 
 [Serializable]
 public class TransactionData {
-   
+    public TransactionData(DateTime date, Category category) {
+        Date = date;
+        Category = category;
+    }
+
     public TransactionData(DateTime date, string description, float amount, Category category) {
         Date = date;
         Description = description;
