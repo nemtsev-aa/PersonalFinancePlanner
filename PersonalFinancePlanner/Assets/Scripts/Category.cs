@@ -1,7 +1,9 @@
 using UnityEngine;
+using System;
 
+[Serializable]
 public class Category {
-    public CategoryData CategoryData { get; private set; }
+    [field: SerializeField] public CategoryData CategoryData { get; private set; }
 
     public Category(CategoryData categoryData) {
         CategoryData = categoryData;

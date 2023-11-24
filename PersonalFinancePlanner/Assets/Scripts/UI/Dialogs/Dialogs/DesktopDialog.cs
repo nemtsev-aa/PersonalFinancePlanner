@@ -1,17 +1,19 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DesktopDialog : Dialog {
-    public event Action IncomeTransactionSelected;
-    public event Action ExpenditureTransactionSelected;
+    public event Action<CategoryViewConfig> EditCategory;
+
+    public event Action<IncomeCategoryViewConfig, DateTime> CreateIncomeTransaction;
+    public event Action<ExpenditureCategoryViewConfig, DateTime> CreateExpenditureTransaction;
 
     [SerializeField] private DateView _dateView;
+    [SerializeField] private FunctionsView _functionsView;
     [SerializeField] private CategoryWidgetPanels _categoryWidgetsPanel;
-    
-    [SerializeField] private Button _incomeTransaction;
-    [SerializeField] private Button _expenditureTransaction;
-   
+
+    private IncomeCategoryViewConfig _incomeConfig;
+    private ExpenditureCategoryViewConfig _expenditureConfig;
+
     public override void Init() {
         if (IsInit == true)
             return;
@@ -19,6 +21,7 @@ public class DesktopDialog : Dialog {
         base.Init();
 
         _dateView.Init();
+        _functionsView.Init();
         _categoryWidgetsPanel.Init();
 
         IsInit = true;
@@ -26,19 +29,49 @@ public class DesktopDialog : Dialog {
 
     public override void AddListeners() {
         base.AddListeners();
-        _incomeTransaction.onClick.AddListener(IncomeTransactionClick);
-        _expenditureTransaction.onClick.AddListener(ExpenditureTransactionClick);
 
-        //_categoryWidgetsPanel.IncomeWidgetSelected += 
+        _functionsView.EditCategory += OnEditCategory;
+        _functionsView.CreateTransaction += OnCreateTransaction;
+
+        _categoryWidgetsPanel.IncomeWidgetSelected += OnIncomeWidgetSelected;
+        _categoryWidgetsPanel.ExpenditureWidgetSelected += OnExpenditureWidgetSelected;
+    }
+
+    private void OnCreateTransaction() {
+        Debug.Log($"OnCreateTransaction");
+
+        if (_incomeConfig != null)
+            CreateIncomeTransaction?.Invoke(_incomeConfig, _dateView.CurrentDate);
+        else
+            CreateExpenditureTransaction?.Invoke(_expenditureConfig, _dateView.CurrentDate);
+    }
+
+    private void OnEditCategory() {
+        Debug.Log($"OnEditCategory");
+
+        if (_incomeConfig != null)
+            EditCategory?.Invoke(_incomeConfig);
+        else
+            EditCategory?.Invoke(_expenditureConfig);
     }
 
     public override void RemoveListeners() {
         base.RemoveListeners();
-        _incomeTransaction.onClick.RemoveListener(IncomeTransactionClick);
-        _expenditureTransaction.onClick.RemoveListener(ExpenditureTransactionClick);
+
+        _functionsView.EditCategory -= OnEditCategory;
+        _functionsView.CreateTransaction -= OnCreateTransaction;
+
+        _categoryWidgetsPanel.IncomeWidgetSelected -= OnIncomeWidgetSelected;
+        _categoryWidgetsPanel.ExpenditureWidgetSelected -= OnExpenditureWidgetSelected;
     }
 
-    private void IncomeTransactionClick() => IncomeTransactionSelected?.Invoke();
-    private void ExpenditureTransactionClick() => ExpenditureTransactionSelected?.Invoke();
-   
+    private void OnIncomeWidgetSelected(IncomeCategoryViewConfig config) {
+        _incomeConfig = config;
+        _expenditureConfig = null;
+    }
+
+    private void OnExpenditureWidgetSelected(ExpenditureCategoryViewConfig config) {
+        _incomeConfig = null;
+        _expenditureConfig = config;
+    }
 }

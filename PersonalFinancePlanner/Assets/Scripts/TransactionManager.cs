@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class TransactionManager {
     private TransactionFactory _transactionFactory;
-    private IEnumerable<TransactionData> _transactionDatas;
+    private TransactionDataList _transactionDatas;
 
-    public TransactionManager(CategoryViewConfigs configs, IEnumerable<TransactionData> transactionDatas) {
-        _transactionDatas = transactionDatas;
+    public TransactionManager(CategoryViewConfigs configs, TransactionDataList dataList) {
+        _transactionDatas = dataList;
 
         Transactions = new List<Transaction>();
         _transactionFactory = new TransactionFactory(configs);
@@ -25,31 +25,18 @@ public class TransactionManager {
     }
 
     private void CreateTransactions() {
-        if (_transactionDatas.Count() == 0)
+        if (_transactionDatas.List.Count() == 0)
             throw new ArgumentNullException($"TransactionDataList is empty");
 
-        foreach (var iData in _transactionDatas) {
+        foreach (var iData in _transactionDatas.List) {
             CreateTransaction(iData);
         }
     }
 
     private void CreateTransaction(TransactionData transactionData) {
-        //Transaction newTransaction = _transactionFactory.Get(transactionData);
-        //Transactions.Add(newTransaction);
-    }
+        string id = $"{transactionData.Date}+{transactionData.Description}";
 
-    
-    //private void CategorizeTransactions() {
-    //    foreach (Transaction transaction in Transactions) {
-    //        if (transaction.Amount < 0) {
-    //            transaction.SetCategory("Расход");
-    //        }
-    //        else if (transaction.Amount > 0) {
-    //            transaction.SetCategory("Доход");
-    //        }
-    //        else {
-    //            transaction.SetCategory("Без категории");
-    //        }
-    //    }
-    //}
+        Transaction newTransaction = new Transaction(transactionData, id);
+        Transactions.Add(newTransaction);
+    }
 }

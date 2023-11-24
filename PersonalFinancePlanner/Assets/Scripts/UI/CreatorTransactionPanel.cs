@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CreatorTransactionPanel : UIPanel {
     public event Action ShowCategorySelectionPanel;
+    public event Action<TransactionData> TransactionDataCreated;
 
     [SerializeField] private DateView _dateView;
     [SerializeField] private InputFieldView _amountInputView;
@@ -17,17 +19,13 @@ public class CreatorTransactionPanel : UIPanel {
 
     [SerializeField] private TextMeshProUGUI _infoText;
 
-
     private CategoryViewConfig _category;
-    private List<TransactionData> _transactionDatas;
     private TransactionData _data;
-
-    public IEnumerable<TransactionData> TransactionDatas => _transactionDatas;
+    private List<TransactionData> _transactions = new List<TransactionData>();
 
     public override void Init() {
         base.Init();
-        _transactionDatas = new List<TransactionData>();
-
+ 
         AddListeners();
         InitializationViews();
     }
@@ -54,7 +52,6 @@ public class CreatorTransactionPanel : UIPanel {
         _dateView.SetDate(_data.Date);
         _amountInputView.SetValue($"{_data.Amount}");
         _descriptionInputView.SetValue($"{_data.Description}");
-        
     }
 
     public void SetCategoryView(CategoryView categoryView) {
@@ -68,10 +65,18 @@ public class CreatorTransactionPanel : UIPanel {
     private void CreateCategoryViewPanel() => ShowCategorySelectionPanel?.Invoke();
 
     private void CreateTransaction() {
-        Category category = _category.GetCategory();
-        //TransactionData newTransactionData = new TransactionData(_descriptionInputView.Value, float.Parse(_amountInputView.Value), category);
+        DateTime date = _dateView.CurrentDate;
+        string description = _descriptionInputView.Value.ToString();
+        float amount = float.Parse(_amountInputView.Value);
+        Category category = _data.Category;
 
-        //_transactionDatas.Add(newTransactionData);
+        TransactionData newTransactionData = new TransactionData(date, description, amount, category);
+
+        if (newTransactionData != _transactions.FirstOrDefault(transition => transition.Date == _data.Date)) {
+            category.CategoryData.SetValue(amount);
+            _transactions.Add(newTransactionData);
+            TransactionDataCreated?.Invoke(newTransactionData);
+        }
     }
 
     private void ClearFields() {

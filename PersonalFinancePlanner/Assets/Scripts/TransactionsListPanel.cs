@@ -7,28 +7,28 @@ public class TransactionsListPanel : UIPanel {
     public event Action<Transaction> EditTransaction;
 
     [SerializeField] private RectTransform _transactionViewParent;
+    [SerializeField] private ToggleGroup _group;
     [SerializeField] private UICompanentsFactory _companentsFactory;
+    
     [SerializeField] private Button _editTransaction;
     [SerializeField] private Button _clearTransaction;
 
-    private List<TransactionViewConfig> _transactionViewConfigs;
+    private TransactionDataList _list;
     private List<TransactionView> _transactionViews;
 
     private TransactionView _selectedTransactionView;
 
-    public void Init(List<TransactionViewConfig> transactionViewConfigs) {
-        _transactionViewConfigs = transactionViewConfigs;
+    public void Init(TransactionDataList list) {
+        _list = list;
 
         _transactionViews = new List<TransactionView>();
         CreateTransactionViews();
     }
 
-
     public override void AddListeners() {
         _editTransaction.onClick.AddListener(EditTransactionClick);
         _clearTransaction.onClick.AddListener(CleartTransactionClick);
     }
-
 
     public override void RemoveListeners() {
         _editTransaction.onClick.RemoveListener(EditTransactionClick);
@@ -42,9 +42,12 @@ public class TransactionsListPanel : UIPanel {
     private void CreateTransactionViews() {
         ClearTransactionViews();
 
-        foreach (var iConfig in _transactionViewConfigs) {
+        foreach (var iTransactionData in _list.List) {
+            var iConfig = new TransactionViewConfig(iTransactionData);
+
             TransactionView newTransactionView = _companentsFactory.Get<TransactionView>(iConfig, _transactionViewParent);
             newTransactionView.Init(iConfig);
+            newTransactionView.Toggle.group = _group;
 
             _transactionViews.Add(newTransactionView);
         }

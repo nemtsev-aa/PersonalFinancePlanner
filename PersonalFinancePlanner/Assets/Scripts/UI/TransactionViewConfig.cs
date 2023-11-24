@@ -7,8 +7,13 @@ public class TransactionViewConfig : UICompanentConfig {
         Transaction = transaction;
     }
 
+    public TransactionViewConfig(TransactionData data) {
+        Transaction = new Transaction(data, $"{data.Date}");
+    }
+
     public Transaction Transaction { get; private set; }
     
+
     public override void OnValidate() {
         
     }

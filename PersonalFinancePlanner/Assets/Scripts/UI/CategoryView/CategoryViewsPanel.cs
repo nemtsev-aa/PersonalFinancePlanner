@@ -24,6 +24,8 @@ public class CategoryViewsPanel : MonoBehaviour {
         _expenditureConfigs = _categoryViewConfigs.ExpenditureCategory;
 
         CreateSubscribers();
+        CreateIncomeCategoryView();
+        CreateExpenditureCategoryView();
     }
 
     private void CreateSubscribers() {

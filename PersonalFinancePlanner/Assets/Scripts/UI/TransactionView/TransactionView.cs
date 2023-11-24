@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class TransactionView : UICompanent {
     [field: SerializeField] public Image CategoryImage { get; private set; }
+    [field: SerializeField] public Toggle Toggle { get; set; }
     [field: SerializeField] public TextMeshProUGUI DescriptionText { get; private set; }
     [field: SerializeField] public TextMeshProUGUI AmountText { get; private set; }
 

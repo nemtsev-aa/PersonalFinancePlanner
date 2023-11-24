@@ -29,9 +29,13 @@ public class UIManager : MonoBehaviour, IDisposable {
         _dialogSwitcher.GetDialogByType(DialogTypes.DesktopDialog).TryGetComponent(out DesktopDialog desktop);
         _dialogSwitcher.GetDialogByType(DialogTypes.Transactions).TryGetComponent(out TransactionsDialog transactions);
 
-        desktop.IncomeTransactionSelected += () => _dialogSwitcher.ShowDialog(DialogTypes.Category);
-        desktop.IncomeTransactionSelected += () => transactions.ShowCreatorTransaction(true);
+        desktop.CreateIncomeTransaction += (config, date) => _dialogSwitcher.ShowDialog(DialogTypes.Transactions);
+        desktop.CreateIncomeTransaction += (config, date) => transactions.ShowCreatorTransaction(config, date);
 
+        desktop.CreateExpenditureTransaction += (config, date) => _dialogSwitcher.ShowDialog(DialogTypes.Transactions);
+        desktop.CreateExpenditureTransaction += (config, date) => transactions.ShowCreatorTransaction(config, date);
+
+        transactions.TransactionCreated += () => desktop.Show(true);
     }
 
     private void OnShowDialogSwitcherSelected() {

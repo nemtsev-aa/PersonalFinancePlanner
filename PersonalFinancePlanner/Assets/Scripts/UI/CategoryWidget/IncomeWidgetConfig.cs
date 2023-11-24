@@ -12,6 +12,7 @@ public class IncomeWidgetConfig : CategoryWidgetConfig {
     }
 
     public string Target { get; private set; }
+    public IncomeCategoryViewConfig CategoryConfig => _categoryConfig;
     
     private void SetData() {
         Name = _categoryConfig.Name;

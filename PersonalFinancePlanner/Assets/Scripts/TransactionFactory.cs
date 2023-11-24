@@ -8,9 +8,6 @@ public class TransactionFactory {
     }
 
     //public Transaction Get(TransactionData data) {
-    //    Category category = GetCategory(data);
-    //    data.SetCategory(category);
-
     //    return new Transaction(data);
     //}
 

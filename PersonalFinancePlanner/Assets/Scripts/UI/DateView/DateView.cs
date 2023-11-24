@@ -10,6 +10,8 @@ public class DateView : MonoBehaviour, IDisposable {
 
     private DateTime _currentDate;
 
+    public DateTime CurrentDate => _currentDate;
+
     public void Init() {
         _currentDate = DateTime.Now;
 

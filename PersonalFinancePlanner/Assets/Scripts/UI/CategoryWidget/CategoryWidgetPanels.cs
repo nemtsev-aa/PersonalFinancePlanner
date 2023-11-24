@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CategoryWidgetPanels : MonoBehaviour {
     public event Action<IncomeCategoryViewConfig> IncomeWidgetSelected;
-    public event Action<IncomeCategoryViewConfig> ExpenditureWidgetSelected;
+    public event Action<ExpenditureCategoryViewConfig> ExpenditureWidgetSelected;
 
     [SerializeField] private CategoryViewConfigs _configs;
     [SerializeField] private UICompanentsFactory _companentFactory;
@@ -58,6 +58,7 @@ public class CategoryWidgetPanels : MonoBehaviour {
             IncomeWidgetConfig widgetConfig = new IncomeWidgetConfig((IncomeCategoryViewConfig)config);
             IncomeWidgetView widget = _companentFactory.Get<IncomeWidgetView>(widgetConfig, iPanel.Parent);
             widget.Init(widgetConfig, _toggleGroup);
+            widget.IncomeWidgetViewSelected += OnIncomeWidgetViewSelected;
 
             _widgets.Add(widget);
 
@@ -67,6 +68,7 @@ public class CategoryWidgetPanels : MonoBehaviour {
             ExpenditureWidgetConfig widgetConfig = new ExpenditureWidgetConfig((ExpenditureCategoryViewConfig)config);
             ExpenditureWidgetView widget = _companentFactory.Get<ExpenditureWidgetView>(widgetConfig, iPanel.Parent);
             widget.Init(widgetConfig, _toggleGroup);
+            widget.ExpenditureWidgetViewSelected += OnExpenditureWidgetViewSelected;
 
             _widgets.Add(widget);
 
@@ -83,5 +85,15 @@ public class CategoryWidgetPanels : MonoBehaviour {
         else {
             return panels.ElementAt(0);
         }
+    }
+
+    private void OnIncomeWidgetViewSelected(IncomeWidgetView view) {
+        var category = view.Config.CategoryConfig;
+        IncomeWidgetSelected?.Invoke(category);
+    }
+
+    private void OnExpenditureWidgetViewSelected(ExpenditureWidgetView view) {
+        var category = view.Config.CategoryViewConfig;
+        ExpenditureWidgetSelected?.Invoke(category);
     }
 }

@@ -2,6 +2,7 @@ using System;
 
 public class ExpenditureWidgetConfig : CategoryWidgetConfig {
     public event Action ExpenditureWidgetDataConfig;
+
     private ExpenditureCategoryViewConfig _categoryConfig;
 
     public ExpenditureWidgetConfig(ExpenditureCategoryViewConfig categoryConfig) : base(categoryConfig) {
@@ -12,7 +13,8 @@ public class ExpenditureWidgetConfig : CategoryWidgetConfig {
     }
 
     public string Limit { get; private set; }
-   
+    public ExpenditureCategoryViewConfig CategoryViewConfig => _categoryConfig;
+    
     private void SetData() {
         Name = _categoryConfig.Name;
         Limit = _categoryConfig.Limit.ToString();
