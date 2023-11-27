@@ -1,8 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CategoryViewsPanel : MonoBehaviour {
+public class CategoryViewsPanel : UIPanel {
+    public event Action IncomeCategoryAdded;
+    public event Action ExpenditureCategoryAdded;
+    public event Action CategoryListChanged;
+
     [SerializeField] private RectTransform _incomeCategoryViewParent;
     [SerializeField] private RectTransform _expenditureCategoryViewParent;
     [SerializeField] private Button _addIncomeCategoryButton;
@@ -23,22 +28,36 @@ public class CategoryViewsPanel : MonoBehaviour {
         _incomeConfigs = _categoryViewConfigs.IncomeCategory;
         _expenditureConfigs = _categoryViewConfigs.ExpenditureCategory;
 
-        CreateSubscribers();
+        AddListeners();
+        
         CreateIncomeCategoryView();
-        CreateExpenditureCategoryView();
+        CreateExpenditureCategoryViews();
     }
 
-    private void CreateSubscribers() {
+    public override void AddListeners() {
+        base.AddListeners();
+
         _addIncomeCategoryButton.onClick.AddListener(AddIncomeCategoryButtonClick);
         _addExpenditureCategoryButton.onClick.AddListener(AddExpenditureCategoryButtonClick);
     }
 
-    private void AddIncomeCategoryButtonClick() {
-        
+    public override void RemoveListeners() {
+        base.RemoveListeners();
+
+        _addIncomeCategoryButton.onClick.RemoveListener(AddIncomeCategoryButtonClick);
+        _addExpenditureCategoryButton.onClick.RemoveListener(AddExpenditureCategoryButtonClick);
     }
 
-    private void AddExpenditureCategoryButtonClick() {
-        
+    public void UpdateIncomeCategoryView() {
+        ClearCategoryViews(_incomeCategoryViews);
+        CreateIncomeCategoryView();
+        CategoryListChanged?.Invoke();
+    }
+
+    public void UpdateExpenditureCategoryView() {
+        ClearCategoryViews(_expenditureCategoryViews);
+        CreateExpenditureCategoryViews();
+        CategoryListChanged?.Invoke();
     }
 
     private void CreateIncomeCategoryView() {
@@ -52,7 +71,7 @@ public class CategoryViewsPanel : MonoBehaviour {
         }
     }
 
-    private void CreateExpenditureCategoryView() {
+    private void CreateExpenditureCategoryViews() {
         _expenditureCategoryViews = new List<CategoryView>();
 
         foreach (var iConfig in _expenditureConfigs.Configs) {
@@ -62,4 +81,17 @@ public class CategoryViewsPanel : MonoBehaviour {
             _expenditureCategoryViews.Add(newCategoryView);
         }
     }
+
+    private void ClearCategoryViews(List<CategoryView> categoryViews) {
+        foreach (var iView in categoryViews) {
+            Destroy(iView.gameObject);
+        }
+
+        categoryViews.Clear();
+    }
+
+    private void AddIncomeCategoryButtonClick() => IncomeCategoryAdded?.Invoke();
+
+    private void AddExpenditureCategoryButtonClick() => ExpenditureCategoryAdded?.Invoke();
+
 }

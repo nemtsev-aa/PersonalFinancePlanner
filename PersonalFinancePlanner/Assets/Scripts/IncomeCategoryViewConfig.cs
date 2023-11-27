@@ -5,7 +5,11 @@ using System;
 public class IncomeCategoryViewConfig : CategoryViewConfig {
     public event Action IncomeDataChanged;
 
-    public IncomeCategoryViewConfig(string name, Sprite icon) : base(name, icon) {
+    public IncomeCategoryViewConfig(string name, float target, Sprite icon) : base(name, icon) {
+        Name = name;
+        Target = target;
+        Icon = icon;
+        Value = 0;
     }
 
     [field: SerializeField] public float Target { get; private set; }
@@ -24,7 +28,13 @@ public class IncomeCategoryViewConfig : CategoryViewConfig {
         Name = data.Name;
         Icon = data.Icon;
         Target = data.Limit;
-        Value = data.Value;
+        Value = data.CurrentExpense;
+
+        IncomeDataChanged?.Invoke();
+    }
+
+    public override void SetCategoryValue(float value) {
+        base.SetCategoryValue(value);
 
         IncomeDataChanged?.Invoke();
     }

@@ -16,14 +16,12 @@ public class SelectCategoryPanel : UIPanel {
     private List<CategoryView> _incomeCategoryViews;
     private List<CategoryView> _expenditureCategoryViews;
 
-    public void Init(CategoryViewConfigs categoryViewConfigs, UICompanentsFactory companentsFactory) {
+    public void Init(CategoryViewConfigs categoryViewConfigs, UICompanentsFactory companentsFactory, DialogMediator dialogMediator) {
         _categoryViewConfigs = categoryViewConfigs;
         _companentsFactory = companentsFactory;
 
         _incomeConfigs = _categoryViewConfigs.IncomeCategory;
         _expenditureConfigs = _categoryViewConfigs.ExpenditureCategory;
-
-        base.Init();
     }
 
     public override void AddListeners() { 

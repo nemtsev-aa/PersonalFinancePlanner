@@ -13,18 +13,21 @@ public class DesktopDialog : Dialog {
 
     private IncomeCategoryViewConfig _incomeConfig;
     private ExpenditureCategoryViewConfig _expenditureConfig;
+    private DialogMediator _dialogMediator;
 
-    public override void Init() {
+    public override void Init(DialogMediator mediator) {
         if (IsInit == true)
             return;
 
-        base.Init();
+        base.Init(mediator);
+        _dialogMediator = mediator;
 
         _dateView.Init();
         _functionsView.Init();
         _categoryWidgetsPanel.Init();
 
         IsInit = true;
+        UpdateWidgets();
     }
 
     public override void AddListeners() {
@@ -36,6 +39,8 @@ public class DesktopDialog : Dialog {
         _categoryWidgetsPanel.IncomeWidgetSelected += OnIncomeWidgetSelected;
         _categoryWidgetsPanel.ExpenditureWidgetSelected += OnExpenditureWidgetSelected;
     }
+
+    public void UpdateWidgets() => _dialogMediator.UpdateCategories();
 
     private void OnCreateTransaction() {
         Debug.Log($"OnCreateTransaction");
@@ -55,16 +60,6 @@ public class DesktopDialog : Dialog {
             EditCategory?.Invoke(_expenditureConfig);
     }
 
-    public override void RemoveListeners() {
-        base.RemoveListeners();
-
-        _functionsView.EditCategory -= OnEditCategory;
-        _functionsView.CreateTransaction -= OnCreateTransaction;
-
-        _categoryWidgetsPanel.IncomeWidgetSelected -= OnIncomeWidgetSelected;
-        _categoryWidgetsPanel.ExpenditureWidgetSelected -= OnExpenditureWidgetSelected;
-    }
-
     private void OnIncomeWidgetSelected(IncomeCategoryViewConfig config) {
         _incomeConfig = config;
         _expenditureConfig = null;
@@ -73,5 +68,15 @@ public class DesktopDialog : Dialog {
     private void OnExpenditureWidgetSelected(ExpenditureCategoryViewConfig config) {
         _incomeConfig = null;
         _expenditureConfig = config;
+    }
+
+    public override void RemoveListeners() {
+        base.RemoveListeners();
+
+        _functionsView.EditCategory -= OnEditCategory;
+        _functionsView.CreateTransaction -= OnCreateTransaction;
+
+        _categoryWidgetsPanel.IncomeWidgetSelected -= OnIncomeWidgetSelected;
+        _categoryWidgetsPanel.ExpenditureWidgetSelected -= OnExpenditureWidgetSelected;
     }
 }

@@ -48,8 +48,7 @@ public class DialogSwitcher {
     public void ShowDialog(DialogTypes type) {
         if (_activeDialog != null) _activeDialog.Show(false);
         _activeDialog = GetDialogByType(type);
-        
-        _activeDialog.Init();
+
         _activeDialog.Show(true);
     }
 
@@ -57,6 +56,7 @@ public class DialogSwitcher {
         return _dialogsDictionary.Values.ToList();
     }
 
+    public void ShowDialogSwitcherView() => _dialogSwitcherView.Show(true);
     private void OnActiveSelectorChanged(SelectorView selectorView) => ShowDialog(selectorView.Config.Type);
 
 }

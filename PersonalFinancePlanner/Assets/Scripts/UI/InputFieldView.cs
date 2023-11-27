@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InputFieldView : MonoBehaviour, IDisposable {
+public class InputFieldView : UICompanent, IDisposable {
     [SerializeField] private TMP_InputField _inputField;
     [SerializeField] private Button _clearField;
 
@@ -18,10 +18,14 @@ public class InputFieldView : MonoBehaviour, IDisposable {
         ShowValue();
     }
 
+    public string GetValue() {
+        return _inputField.text;
+    }
+
     public void Reset() => ClearFieldClick();
 
     private void AddListeners() {
-        _inputField.onEndEdit.AddListener(InputFieldValueChanged);
+        _inputField.onValueChanged.AddListener(InputFieldValueChanged);
         _clearField.onClick.AddListener(ClearFieldClick);
     }
 

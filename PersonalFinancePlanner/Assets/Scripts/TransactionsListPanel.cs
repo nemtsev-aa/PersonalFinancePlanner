@@ -1,33 +1,56 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TransactionsListPanel : UIPanel {
     public event Action<Transaction> EditTransaction;
+    public event Action ShowFilterPanel;
 
     [SerializeField] private RectTransform _transactionViewParent;
     [SerializeField] private ToggleGroup _group;
     [SerializeField] private UICompanentsFactory _companentsFactory;
-    
+
+    [SerializeField] private TextMeshProUGUI _transactionsCountText;
     [SerializeField] private Button _editTransaction;
     [SerializeField] private Button _clearTransaction;
+    [SerializeField] private Button _showFilter;
 
-    private TransactionDataList _list;
+    private TransactionManager _transactionManager;
     private List<TransactionView> _transactionViews;
 
     private TransactionView _selectedTransactionView;
 
-    public void Init(TransactionDataList list) {
-        _list = list;
-
+    public void Init(TransactionManager transactionManager, DialogMediator dialogMediator) {
+        _transactionManager = transactionManager;
         _transactionViews = new List<TransactionView>();
-        CreateTransactionViews();
+        
+        AddListeners();
+        SetTransactionsList(_transactionManager.Transactions);
     }
 
     public override void AddListeners() {
         _editTransaction.onClick.AddListener(EditTransactionClick);
         _clearTransaction.onClick.AddListener(CleartTransactionClick);
+        _showFilter.onClick.AddListener(ShowFilterPanelClick);
+    }
+
+    public override void UpdateContent() {
+        base.UpdateContent();
+
+        SetTransactionsList(_transactionManager.Transactions);
+    }
+
+    public void SetTransactionsList(IReadOnlyList<Transaction> transactions) {
+        ClearTransactionViews();
+
+        if (transactions.Count == 0) {
+            ShowTransactionsCount();
+            return;
+        }
+           
+        CreateTransactionViews(transactions);
     }
 
     public override void RemoveListeners() {
@@ -39,18 +62,19 @@ public class TransactionsListPanel : UIPanel {
 
     private void CleartTransactionClick() => ClearTransactionView();
 
-    private void CreateTransactionViews() {
-        ClearTransactionViews();
-
-        foreach (var iTransactionData in _list.List) {
-            var iConfig = new TransactionViewConfig(iTransactionData);
+    private void CreateTransactionViews(IReadOnlyList<Transaction> transactions) {
+        foreach (var iTransaction in transactions) {
+            var iConfig = new TransactionViewConfig(iTransaction.Data);
 
             TransactionView newTransactionView = _companentsFactory.Get<TransactionView>(iConfig, _transactionViewParent);
             newTransactionView.Init(iConfig);
             newTransactionView.Toggle.group = _group;
+            newTransactionView.TransactionViewSelected += OnTransactionViewSelected;
 
             _transactionViews.Add(newTransactionView);
         }
+
+        ShowTransactionsCount();
     }
 
     private void ClearTransactionViews() {
@@ -65,10 +89,24 @@ public class TransactionsListPanel : UIPanel {
     }
 
     private void ClearTransactionView() {
-        if (_selectedTransactionView = null)
+        if (_selectedTransactionView == null)
             return;
 
         Destroy(_selectedTransactionView.gameObject);
+        
         _transactionViews.Remove(_selectedTransactionView);
+        _transactionManager.RemoveTransaction(_selectedTransactionView.Config.Transaction.Data);
+        
+        ShowTransactionsCount();
+    }
+
+    private void ShowTransactionsCount() {
+        _transactionsCountText.text = $"{_transactionViews.Count}";
+    }
+
+    private void ShowFilterPanelClick() => ShowFilterPanel?.Invoke();
+
+    private void OnTransactionViewSelected(TransactionView view) {
+        _selectedTransactionView = view;
     }
 }

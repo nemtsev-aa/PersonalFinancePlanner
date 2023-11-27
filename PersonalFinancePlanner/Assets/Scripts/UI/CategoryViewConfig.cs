@@ -26,4 +26,10 @@ public abstract class CategoryViewConfig : UICompanentConfig {
 
     public abstract void SetCategoryData(CategoryData data);
 
+    public virtual void SetCategoryValue(float value) {
+        if (value < 0)
+            throw new ArgumentNullException("Invalid Value");
+
+        Value += value;
+    }
 }

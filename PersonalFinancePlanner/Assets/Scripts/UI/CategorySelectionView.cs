@@ -7,10 +7,8 @@ public class CategorySelectionView : MonoBehaviour, IDisposable {
 
     [SerializeField] private Transform SelectorContainer;
     [SerializeField] private Button _selectCategory;
-
-    [field: SerializeField] public Transform CategoryViewContainer { get; private set; }
-
-    private CategoryView _categoryView;
+    [SerializeField] private Transform _categoryViewContainer;
+    [SerializeField] private CategoryView _categoryView;
 
     public void Init() {
         AddListeners();
@@ -20,10 +18,14 @@ public class CategorySelectionView : MonoBehaviour, IDisposable {
     public void Reset() {
         ShowCategoryView(false);
         ShowSelector(true);
-        _categoryView = null;
     }
 
     public void ShowCategoryView() => ShowCategoryView(true);
+
+    public void SetCategoryData(CategoryData data) {
+        ShowCategoryView(true);
+        _categoryView.SetCategoryData(data);
+    }
 
     private void AddListeners() {
         _selectCategory.onClick.AddListener(SelectCategoryClick);
@@ -36,11 +38,11 @@ public class CategorySelectionView : MonoBehaviour, IDisposable {
 
     private void ShowSelector(bool status) {
         SelectorContainer.gameObject.SetActive(status);
-        CategoryViewContainer.gameObject.SetActive(!status);
+        _categoryViewContainer.gameObject.SetActive(!status);
     }
 
     private void ShowCategoryView(bool status) {
-        CategoryViewContainer.gameObject.SetActive(status);
+        _categoryViewContainer.gameObject.SetActive(status);
         SelectorContainer.gameObject.SetActive(!status);
     }
 

@@ -5,9 +5,11 @@ using UnityEngine;
 public class FinancialGoalsDialog : Dialog {
     
     
-    public override void Init() {
-        base.Init();
+    public override void Init(DialogMediator mediator) {
+        base.Init(mediator);
 
+
+        IsInit = true;
     }
 
     public override void AddListeners() {

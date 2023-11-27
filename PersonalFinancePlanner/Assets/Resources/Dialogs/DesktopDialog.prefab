@@ -1005,6 +1005,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowDialogSwitcher: {fileID: 1087434330908836748}
+  Panels:
+  - {fileID: 6445279565714523883}
   _dateView: {fileID: 2141282251677183666}
   _functionsView: {fileID: 3298856950365036643}
   _categoryWidgetsPanel: {fileID: 1295890767855274615}

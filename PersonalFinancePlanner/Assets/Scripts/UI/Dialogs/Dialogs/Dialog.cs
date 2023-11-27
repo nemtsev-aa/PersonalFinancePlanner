@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,9 +9,15 @@ public abstract class Dialog : MonoBehaviour, IDisposable {
     public event Action ShowDialogSwitcherSelected;
 
     [SerializeField] protected Button ShowDialogSwitcher;
+    [SerializeField] protected List<UIPanel> Panels = new List<UIPanel>();
+
+    protected DialogMediator Mediator;
+
     public bool IsInit { get; protected set; } = false;
     
-    public virtual void Init() {
+    public virtual void Init(DialogMediator mediator) {
+        Mediator = mediator;
+
         AddListeners();
     }
 
@@ -17,8 +25,15 @@ public abstract class Dialog : MonoBehaviour, IDisposable {
         gameObject.SetActive(value);
     }
 
+    public virtual void ShowPanel<T>(bool value) where T : UIPanel {
+        T panel = (T)Panels.First(panel => panel is T);
+
+        panel.UpdateContent();
+        panel.Show(value);
+    }
+
     public virtual void Close() {
-        Show(false);
+        gameObject.SetActive(false);
         OnClosed?.Invoke();
     }
 
@@ -28,6 +43,10 @@ public abstract class Dialog : MonoBehaviour, IDisposable {
 
     public virtual void RemoveListeners() {
         ShowDialogSwitcher.onClick.RemoveListener(ShowDialogSwitcherClick);
+    }
+
+    public virtual T GetPanelByType<T>() where T : UIPanel {
+        return (T)Panels.FirstOrDefault(panel => panel is T);
     }
 
     private void ShowDialogSwitcherClick() => ShowDialogSwitcherSelected?.Invoke();

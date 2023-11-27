@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DateView : MonoBehaviour, IDisposable {
+public class DateView : UICompanent, IDisposable {
     [SerializeField] private TextMeshProUGUI _dateText;
     [SerializeField] private Button _followDateButton;
     [SerializeField] private Button _yesterDateButton;

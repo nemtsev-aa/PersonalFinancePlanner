@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CategoryViewConfigs", menuName = "Config/CategoryViewConfigs")]
@@ -14,5 +15,19 @@ public class CategoryViewConfigs : ScriptableObject {
 
     public void AddExpenditureCategory(ExpenditureCategoryViewConfig config) {
         _expenditureCategory.AddCategory(config);
+    }
+
+    public CategoryViewConfig GetCategoryByName(string name) {
+        foreach (var item in _incomeCategory.Configs) {
+            if (item.Name == name)
+                return item;
+        }
+
+        foreach (var item in _expenditureCategory.Configs) {
+            if (item.Name == name)
+                return item;
+        }
+
+        return null;
     }
 }

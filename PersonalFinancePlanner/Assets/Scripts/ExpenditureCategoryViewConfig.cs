@@ -5,7 +5,11 @@ using UnityEngine;
 public class ExpenditureCategoryViewConfig : CategoryViewConfig {
     public event Action ExpenditureDataChanged;
 
-    public ExpenditureCategoryViewConfig(string name, Sprite icon) : base(name, icon) {
+    public ExpenditureCategoryViewConfig(string name,  float limit, Sprite icon) : base(name, icon) {
+        Name = name;
+        Limit = limit;
+        Icon = icon;
+        Value = 0;
     }
 
     [field: SerializeField] public float Limit { get; private set; }
@@ -24,7 +28,13 @@ public class ExpenditureCategoryViewConfig : CategoryViewConfig {
         Name = data.Name;
         Icon = data.Icon;
         Limit = data.Limit;
-        Value = data.Value;
+        Value = data.CurrentExpense;
+
+        ExpenditureDataChanged?.Invoke();
+    }
+
+    public override void SetCategoryValue(float value) {
+        base.SetCategoryValue(value);
 
         ExpenditureDataChanged?.Invoke();
     }

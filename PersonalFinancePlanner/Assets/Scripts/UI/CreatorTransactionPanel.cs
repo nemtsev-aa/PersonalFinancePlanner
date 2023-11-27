@@ -19,13 +19,13 @@ public class CreatorTransactionPanel : UIPanel {
 
     [SerializeField] private TextMeshProUGUI _infoText;
 
-    private CategoryViewConfig _category;
+    private CategoryData _category;
+    private CategoryView _categoryView;
+
     private TransactionData _data;
     private List<TransactionData> _transactions = new List<TransactionData>();
 
-    public override void Init() {
-        base.Init();
- 
+    public void Init(DialogMediator mediator) {
         AddListeners();
         InitializationViews();
     }
@@ -43,23 +43,27 @@ public class CreatorTransactionPanel : UIPanel {
         _categorySelectionView.SelectCategory += CreateCategoryViewPanel;
     }
 
+    public override void RemoveListeners() {
+        _applayButton.onClick.RemoveListener(CreateTransaction);
+        _clearButton.onClick.RemoveListener(ClearFields);
+        _categorySelectionView.SelectCategory -= CreateCategoryViewPanel;
+    }
+
     public void SetTransactionData(TransactionData data) {
         _data = data;
         FillInFields();
     }
 
-    private void FillInFields() {
-        _dateView.SetDate(_data.Date);
-        _amountInputView.SetValue($"{_data.Amount}");
-        _descriptionInputView.SetValue($"{_data.Description}");
+    public void SetCategoryData(CategoryData categoryData) {
+        _category = categoryData;
+        _categorySelectionView.SetCategoryData(_category);
     }
 
     public void SetCategoryView(CategoryView categoryView) {
-        _category = categoryView.Config;
-        categoryView.gameObject.transform.SetParent(_categorySelectionView.CategoryViewContainer, false);
-        categoryView.GetComponent<RectTransform>().localScale = Vector3.one * 2;
+        _categoryView = categoryView;
+        _category = categoryView.Config.GetCategory().CategoryData;
 
-        _categorySelectionView.ShowCategoryView();
+        _categorySelectionView.SetCategoryData(_category);
     }
 
     private void CreateCategoryViewPanel() => ShowCategorySelectionPanel?.Invoke();
@@ -75,6 +79,8 @@ public class CreatorTransactionPanel : UIPanel {
         if (newTransactionData != _transactions.FirstOrDefault(transition => transition.Date == _data.Date)) {
             category.CategoryData.SetValue(amount);
             _transactions.Add(newTransactionData);
+
+            ClearFields();
             TransactionDataCreated?.Invoke(newTransactionData);
         }
     }
@@ -87,8 +93,11 @@ public class CreatorTransactionPanel : UIPanel {
         _category = null;
     }
 
-    public override void RemoveListeners() {
-        _applayButton.onClick.RemoveListener(CreateTransaction);
-        _clearButton.onClick.RemoveListener(ClearFields);
+    private void FillInFields() {
+        _dateView.SetDate(_data.Date);
+        _amountInputView.SetValue($"{_data.Amount}");
+        _descriptionInputView.SetValue($"{_data.Description}");
+
+        SetCategoryData(_data.Category.CategoryData);
     }
 }
